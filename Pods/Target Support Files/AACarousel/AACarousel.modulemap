@@ -1,0 +1,6 @@
+framework module AACarousel {
+  umbrella header "AACarousel-umbrella.h"
+
+  export *
+  module * { export * }
+}
