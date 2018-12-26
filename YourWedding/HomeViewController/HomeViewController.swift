@@ -41,16 +41,22 @@ class HomeViewController: UIViewController,UICollectionViewDataSource,UICollecti
     @IBOutlet var categoryTitle : UILabel?
     @IBOutlet var featuredProductTitle : UILabel?
     @IBOutlet var newProductTitle : UILabel?
+    
+    var sdWebImageSource : [InputSource]? = []
+    var imageArray : NSArray? = []
    
     override func viewDidLoad() {
-     
+        
         let ObjServer = Server()
         ObjServer.delegate = self
+        ObjServer.hitGetRequest(url: allOfferImageUrl , inputIsJson: false, parametresJsonDic:nil, parametresJsonArray: nil,callingViewController:self, completion: {_,_,_ in })
+     
+       
         ObjServer.hitGetRequest(url: featuredProductUrl, inputIsJson: false, parametresJsonDic:nil, parametresJsonArray: nil,callingViewController:self, completion: {_,_,_ in })
     
       
 self.navigationController?.navigationBar.isHidden = true
-    slideShow()
+   
   // code for scroll view
         scrollViewHome?.contentSize = CGSize(width: self.view.frame.size.width, height: 1200)
         scrollViewHome?.contentInset=UIEdgeInsets(top: 0,left: 0.0,bottom: 0.0,right: 0.0);
@@ -112,11 +118,14 @@ self.navigationController?.navigationBar.isHidden = true
         }
         
         // can be used with other sample sources as `afNetworkingSource`, `alamofireSource` or `sdWebImageSource` or `kingfisherSource`
-        slideshow?.setImageInputs(localSource as! [InputSource])
+//        slideshow?.setImageInputs(localSource as! [InputSource])
+        slideshow?.setImageInputs(sdWebImageSource ?? localSource as! [InputSource] )
     }
     
 // MARK: - recieve API data
     func didReceiveResponse(dataDic: NSDictionary?, response:URLResponse?) {
+        if let val = dataDic!["products"]{
+
         if response?.url == URL(string:  "https://5db043a132bc463ff146cd4dafe4c686:4d46228d1e98c7bd1df570363a0427f5@yourweddinglinen.myshopify.com/admin/products.json?collection_id=60122857537")
            {
         featuredProductArray = dataDic?.object(forKey: "products") as? NSArray
@@ -154,6 +163,31 @@ self.navigationController?.navigationBar.isHidden = true
                 MBProgressHUD.hide(for: self.view, animated: true)
             }
 
+        }
+        }else{
+            
+            imageArray = dataDic?.object(forKey: "images") as? NSArray
+            var count = 0
+            for item in imageArray ?? []{
+                let urlString = (imageArray?.object(at: count) as? NSDictionary)?.object(forKey: "src") as? String
+                let url:URL = URL(string: urlString ?? "" )!
+                
+                
+                let data = try? Data(contentsOf: url ) //make sure your image in this url does exist, otherwise unwrap in a if let check / try-catch
+                
+                sdWebImageSource?.append(ImageSource(image: UIImage.sd_image(with: data)!))
+                
+                count = count + 1
+                
+            }
+            DispatchQueue.main.async {
+                
+                MBProgressHUD.showAdded(to: self.view, animated: true)
+                
+                self.slideShow()
+                MBProgressHUD.hideAllHUDs(for: self.view, animated: true)
+            }
+            
         }
     }
     func didFailWithError(error: String) {

@@ -182,13 +182,12 @@ extension UIViewController:ServerCallback,UINavigationControllerDelegate{
     //#MARK:- methodCartButton
     
     @objc func methodCartButton(){
-        
-//                let destinationViewController = CartViewController(nibName: "CartViewController", bundle: nil)
-//        if self is CartViewController {
-//
-//        }else{
-//                Utility.pushToViewController(callingViewController: self, moveToViewController: destinationViewController)
-//        }
+        let destinationViewController = CustomTabBarViewController(nibName: "CustomTabBarViewController", bundle: nil)
+  
+        destinationViewController.selectedIndex = 2
+        let navigationController = UINavigationController(rootViewController:  destinationViewController)
+        UIApplication.shared.delegate?.window??.rootViewController  = navigationController
+
     }
     //#MARK:- logoutSuccessful
     

@@ -49,6 +49,9 @@ var addressUrl :String{
 var ProductsCountUrl:String{
     return String(format: baseUrl+"products/count.json?collection_id=")
 }
+var allOfferImageUrl:String{
+    return String(format: baseUrl+"products/1927021461569/images.json")
+}
 var refundOrderUrl:String{
     return String(format: baseUrl+"orders/")  
 }

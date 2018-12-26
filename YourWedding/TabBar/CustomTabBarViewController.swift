@@ -284,6 +284,7 @@ class CustomTabBarViewController: UITabBarController {
         tabBar.barTintColor = UIColor(red: 3.0/255.0, green:66.0/255.0, blue: 81.0/255.0, alpha: 1.0)
         UITabBarItem.appearance().setTitleTextAttributes([NSAttributedString.Key.foregroundColor: UIColor.white], for: .normal)
        self.methodToSetSideMenuButtonInNavigationBar(title: arrayMenuItems.object(at: 0) as! String)
+      UINavigationBar.appearance().barTintColor = UIColor.white
         if let items = self.tabBar.items {
             
             //Get the height of the tab bar
@@ -295,7 +296,7 @@ class CustomTabBarViewController: UITabBarController {
             let numItems = CGFloat(items.count)
             let itemSize = CGSize(
                 width: tabBar.frame.width / numItems,
-                height: tabBar.frame.height)
+                height: tabBar.frame.height - 10)
             
             for (index, _) in items.enumerated() {
                 

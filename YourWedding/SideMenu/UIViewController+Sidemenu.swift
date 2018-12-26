@@ -74,28 +74,7 @@ extension UIViewController{
              self.navigationItem.setLeftBarButtonItems([navigateSpacer,leftBarButton,leftBartitle,infoBarItem], animated: false)
         
         
-        
-        
-        
-//        let infoButton = UIButton()
-//        infoButton.setImage(#imageLiteral(resourceName: "InfoIcon"), for: .normal)
-//        infoButton.frame = CGRect(x:0,y:0,width:47,height:47)
-//        infoButton.addTarget(self, action: #selector(menuButtonAction(sender:)), for: .touchUpInside)
-//        let navigateSpacerInfo = UIBarButtonItem(barButtonSystemItem: .fixedSpace, target: nil, action: nil)
-//        navigateSpacerInfo.width = -116
-//        
-//        
-//        let rightBarButtonInfo = UIBarButtonItem()
-//        // leftBarButton.style = .plain
-//        rightBarButtonInfo.customView = infoButton
-//        
-//        self.navigationItem.setRightBarButtonItems([navigateSpacerInfo,rightBarButtonInfo], animated: false)
-//        let titleLabel = UILabel(frame: CGRect(x: 0.0, y: 40.0, width: 320, height: 40))
-//        titleLabel.textAlignment = .left
-//        titleLabel.text = title
-//        titleLabel.textColor = .white
-//        titleLabel.font = UIFont(name: appFontBold, size: 19.0)
-       // self.navigationItem.titleView = titleLabel
+
     
     
     }
@@ -126,19 +105,7 @@ extension UIViewController{
         let titleImage = UIImageView(frame: CGRect(x: 13.0, y: 40.0, width: 200, height: 40))
         titleImage.image = #imageLiteral(resourceName: "logoImage")
         self.navigationItem.titleView = titleImage
-//        let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(imageTapped(tapGestureRecognizer:)))
-//        titleImage.isUserInteractionEnabled = true
-//        titleImage.addGestureRecognizer(tapGestureRecognizer)
-//        
-        
-       // self.MethodToSetGesture()
-    
-        
-//        let rightBarButton1 = UIBarButtonItem()
-//        rightBarButton1.customView = buttonCart
-//        rightBarButton1.addBadge(number: badgeNumber)
-//        
-//        self.navigationItem.setRightBarButtonItems([rightBarButton1,navigateSpacer,rightBarButton], animated: false)
+
         
         
     }
@@ -173,7 +140,7 @@ extension UIViewController{
         rightBarButton.customView = buttonLogout
         self.navigationItem.rightBarButtonItem = rightBarButton
         let navigationBar = self.navigationController?.navigationBar
-        self.navigationController?.navigationBar.backgroundColor = UIColor.white
+   
         
     }
     func methodToSetNavigationBarWithoutLogoImage(title :String , badgeNumber : Int){
@@ -201,6 +168,17 @@ extension UIViewController{
         titleImage.addGestureRecognizer(tapGestureRecognizer)
         
         self.navigationItem.titleView = titleImage
+        
+        let buttonCart = UIButton()
+        buttonCart.setImage(#imageLiteral(resourceName: "cartImage"), for: .normal)
+        buttonCart.frame = CGRect(x:0,y:0,width:30,height:30)
+        buttonCart.addTarget(self, action: #selector(self.methodCartButton), for: .touchUpInside)
+        
+        let rightBarButton1 = UIBarButtonItem()
+        rightBarButton1.customView = buttonCart
+        
+        
+        self.navigationItem.setRightBarButtonItems([rightBarButton1,navigateSpacer], animated: false)
         
         
     }
